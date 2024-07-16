@@ -1,0 +1,27 @@
+n, q = map(int, input().split())
+s = input()
+minlis = [-1 for i in range(26)]
+pref = [0 for i in range(n+1)]
+suff = [0 for i in range(n+2)]
+for i in range(1, n+1):
+    cur = ord(s[i-1]) - 65
+    for j in range(0, 26):
+        minlis[j] = min(minlis[j], cur)
+    pref[i] = pref[i-1]
+    if (minlis[cur] < cur):
+        pref[i] += 1
+    minlis[cur] = cur
+minlis = [-1 for i in range(26)]
+for i in reversed(range(1, n+1)):
+    #print(i, "adadad")
+    cur = ord(s[i-1]) - 65
+    for j in range(0, 26):
+        minlis[j] = min(minlis[j], cur)
+    suff[i] = suff[i+1]
+    if (minlis[cur] < cur):
+        suff[i] += 1
+    minlis[cur] = cur
+#print(pref, suff)
+for i in range(q):
+    x, y = map(int, input().split())
+    print(pref[x-1] + suff[y+1])

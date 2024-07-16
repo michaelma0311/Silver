@@ -1,0 +1,17 @@
+
+n = int(readline())
+h = list(map(int,  readline().split()))
+l = []
+ans = 0
+for i in range(n):
+    while len(l) != 0 and h[i] > h[l[0]]:
+        ans += i-l[0]+1
+        # print("first: " ,l[0], " ans: " , ans)
+        l.pop(0)
+    if len(l) != 0:
+        ans += i-l[0]+1
+        #print("second: " ,l[0], " ans: " , ans)
+    #print(" ")
+    #print("push: ", i)
+    l.insert(0, i)
+print(ans)

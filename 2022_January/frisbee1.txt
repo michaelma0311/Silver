@@ -1,0 +1,23 @@
+from sys import stdin
+
+def main():
+    n = int(stdin.readline())
+    #h = [int(x) for x in stdin.readline().split()]
+    # h = list(map(int,  readline().split()))
+    h=[*map(int,  stdin.readline().split())]
+    #print(h)
+    l = []
+    ans = 0
+    for i in range(n):
+        while len(l) != 0 and h[i] > h[l[0]]:
+            ans += i-l[0]+1
+            # print("first: " ,l[0], " ans: " , ans)
+            l.pop(0)
+        if len(l) != 0:
+            ans += i-l[0]+1
+            #print("second: " ,l[0], " ans: " , ans)
+        #print(" ")
+        #print("push: ", i)
+        l.insert(0, i)
+    print(ans)
+main()

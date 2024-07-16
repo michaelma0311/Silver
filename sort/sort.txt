@@ -1,0 +1,12 @@
+fin = open('sort.in')
+n = int(fin.readline())
+l = []
+for i in range(n):
+    l.append([int(fin.readline()), i])
+l = sorted(l)
+p = max(l)
+ans = 0
+for i in range(n):
+    ans = max(ans, l[i][1]-i)
+with open('sort.out', 'w') as f:
+    f.write(str(ans+1) + '\n')

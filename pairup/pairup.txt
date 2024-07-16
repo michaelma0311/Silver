@@ -1,0 +1,24 @@
+fin = open('pairup.in')
+n = int(fin.readline())
+cows = []
+for i in range(n):
+    x, y = map(int, fin.readline().split())
+    cows.append([x, y])
+left, right = 0, n-1
+ans = 0
+cows = sorted(cows, key = lambda x: x[1])
+times = 0
+while left <= right:
+    ans = max(ans, cows[left][1] + cows[right][1])
+    times = min(cows[left][0], cows[right][0])
+    if left == right:
+        times = times/2
+    cows[left][0] -= times
+    cows[right][0] -= times
+    if cows[left][0] == 0:
+        left += 1
+    if cows[right][0] == 0:
+        right -= 1
+
+with open('pairup.out', 'w') as f:
+    f.write(str(ans) + '\n')

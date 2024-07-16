@@ -1,0 +1,22 @@
+gifts= []
+def dfs(sur, cur):
+    if reachable[sur][cur]:
+        return
+    reachable[sur][cur] = True
+    for i in gifts[cur]:
+        dfs(sur, i-1)
+n = int(input())
+reachable = [[False for i in range(n)] for j in range(n)]
+for i in range(n):
+    p = list(map(int, input().split()))
+    gifts += [p[:p.index(i+1)+1]]
+for i in range(n):
+    dfs(i, i)
+#print(gifts)
+for i in range(n):
+    for j in gifts[i]:
+        #print(j-1, i)
+        if reachable[j-1][i] == True:
+            print(j)
+            break
+    

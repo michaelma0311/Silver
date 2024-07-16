@@ -1,0 +1,14 @@
+def main():
+    fin = open('planting.in')
+
+    m = int(fin.readline())
+    l = [0 for i in range(m)]
+    for i in range(m-1):
+        a, b = map(int, fin.readline().split())
+        l[a-1] += 1
+        l[b-1] += 1
+    answer = max(l) + 1
+
+    with open('planting.out', 'w') as f:
+        f.write(str(answer) + '\n')
+main()

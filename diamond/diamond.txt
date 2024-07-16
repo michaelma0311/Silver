@@ -1,0 +1,16 @@
+read = open("diamond.in", "r").readline
+write = open("diamond.out", "w").write
+n, k = map(int, read().split())
+diamonds = [int(read()) for _ in range(n)] 
+diamonds.sort()
+ans, l, best_left = 0, 0, 0
+best_rec = [0] * n
+for r in range(n):
+    #print(diamonds[l], diamonds[r])
+    while diamonds[l] + k < diamonds[r]:
+        print(best_rec[l])
+        best_left = max(best_left, best_rec[l])
+        l += 1
+    best_rec[r] = r - l + 1
+    ans = max(ans, best_rec[r] + best_left)
+write(str(ans)) 

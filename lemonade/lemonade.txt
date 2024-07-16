@@ -1,0 +1,11 @@
+fin = open('lemonade.in')
+n = int(fin.readline())
+cows = list(map(int, fin.readline().split()))
+ans = 0
+cur = 0
+cows = reversed(sorted(cows))
+for i in cows:
+    if i >= cur:
+        cur += 1
+with open('lemonade.out', 'w') as f:
+    f.write(str(cur)+'\n')

@@ -1,0 +1,29 @@
+n, m = map(int, input().split())
+boots = list(map(int, input().split()))
+visited = [[False for i in range(250)] for j in range(250)]
+shoes = []
+ans = float('inf')
+def dfs(depth, discard):
+    global ans
+    if visited[depth][discard] == True:
+        return
+    visited[depth][discard] = True
+    if depth >= n-1:
+        ans = min(ans, discard)
+        return
+    i = depth+1
+    while i <= depth + shoes[discard][1] and i < n:
+        if boots[i] <= shoes[discard][0]:
+            dfs(i, discard)
+        i += 1
+    for i in range(discard, m):
+        #print(depth, i)
+        if boots[depth] <= shoes[i][0]:
+            dfs(depth, i)
+        
+
+for i in range(m):
+    shoes.append(tuple(map(int, input().split())))
+
+dfs(0, 0)
+print(ans)

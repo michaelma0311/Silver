@@ -1,0 +1,14 @@
+fin = open('maxcross.in')
+n, k, b = map(int, fin.readline().split())
+pre = [0 for i in range(n+1)]
+for i in range(b):
+    pre[int(fin.readline())] += 1
+for i in range(1,n+1):
+    pre[i] += pre[i-1]
+ans = float('inf')
+
+for i in range(n+1-k):
+    ans = min(pre[i+k]-pre[i], ans)
+
+with open('maxcross.out', 'w') as f:
+    f.write(str(ans) + '\n')

@@ -1,0 +1,40 @@
+def main():
+    fin = open('lazy.in')
+    N, k= list(map(int, fin.readline().split()))
+    field = [[0 for i in range(N*2)] for j in range(N*2)]
+    field_sum = [[0 for i in range(N*2)] for j in range(N*2)]
+
+    for i in range(N):
+        temp = list(map(int, fin.readline().split()))
+        for j in range(N):
+            field[i+j][N-i+j-1] = temp[j]
+            field_sum[i+j][N-i+j-1] = temp[j]
+
+    for i in range(2*N):
+        for j in range(2*N):
+            if i >= 1:
+                field_sum[i][j] += field_sum[i-1][j]
+            if j >= 1:
+                field_sum[i][j] += field_sum[i][j-1]
+            if i >= 1 and j >= 1:
+                field_sum[i][j] -= field_sum[i-1][j-1]
+    ans = 0
+
+    for i in range(2*N):
+        for j in range(2*N):
+            if field[i][j] != 0:
+                subleft, subright, addtop = 0, 0, 0
+                top = max(i-k, 0)
+                bottom = min(i+k, 2*N-1)
+                left = max(j-k, 0)
+                right = min(j+k, 2*N-1)
+                if top != 0:
+                    subright = field_sum[top-1][right]
+                if left != 0:
+                    subleft = field_sum[bottom][left-1]
+                if left != 0 and top != 0:
+                    addtop = field_sum[top-1][left-1]
+                ans = max(ans, field_sum[bottom][right] - subleft - subright + addtop)
+    with open('lazy.out', 'w') as f:
+        f.write(str(ans) + '\n')
+main()

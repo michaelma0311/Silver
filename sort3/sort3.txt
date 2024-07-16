@@ -1,0 +1,27 @@
+'''
+ID: michael504
+LANG: PYTHON3
+TASK: sort3
+'''
+
+fin = open('sort3.in')
+
+
+n = int(fin.readline())
+lis = []
+for i in range(n):
+    lis += [int(fin.readline())]
+p = sorted(lis)
+cyc = 0
+ans = 0
+for i in range(n):
+    for j in range(i+1, n):
+        if p[i] == lis[j] and p[j] == lis[i] and lis[i] != lis[j]:
+           # print(i, j, "adada")
+            lis[i], lis[j] = lis[j], lis[i]
+            cyc += 1
+for i in range(n):
+    if (p[i] != lis[i]):
+        ans += 1
+with open('sort3.out', 'w') as f:
+    f.write(str(int(ans/3 * 2 + cyc)) + '\n')

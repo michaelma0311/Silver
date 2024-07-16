@@ -1,0 +1,26 @@
+fin = open('highcard.in')
+n = int(fin.readline())
+elses = set()
+bes = []
+for i in range(n): 
+    elses.add(int(fin.readline()))
+ans = 0
+els = []
+for i in range(1, 2*n+1):
+    if i not in elses:
+        bes.append(i)
+    else:
+        els.append(i)
+curb = 0
+cure = 0
+while curb < n:
+    if bes[curb] > els[cure]:
+        curb += 1
+        cure += 1
+        ans += 1
+    else:
+        curb += 1
+
+    
+with open('highcard.out', 'w') as f:
+    f.write(str(ans) + '\n')

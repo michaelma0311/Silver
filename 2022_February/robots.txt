@@ -1,0 +1,13 @@
+n = int(input())
+x, y = map(int, input().split())
+lis = [[0, 0, 0]]
+for j in range(n):
+    r, c = map(int, input().split())
+    for i in range(len(lis)):
+        lis.append([lis[i][0] + r, lis[i][1] + c, lis[i][2] + 1])
+p  = [0 for i in range(n)]
+for r, c, count in lis:
+    if r == x and c == y:  
+        p[count-1] += 1
+for i in p:
+    print(i)

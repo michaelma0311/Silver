@@ -1,0 +1,49 @@
+import sys
+sys.setrecursionlimit(1000000)
+def dfs(cur, x):
+    global depth
+    if visited[cur] == True:
+        return
+    depth += 1
+    #print(cur, x, depth, visited)
+    visited[cur] = True
+    for i in range(n):
+        if can[cur][i] <= x:
+            dfs(i, x)
+
+
+fin = open('moocast.in')
+n = int(fin.readline())
+x = [0 for i in range(n)]
+y = [0 for i in range(n)]
+can = [[False for i in range(n)] for j in range(n)]
+
+
+for i in range(n):
+    x1, y1 = map(int, fin.readline().split())
+    x[i] = x1
+    y[i] = y1
+lo = 1
+hi = 1000000000
+ans = 1000000000000
+for i in range(n):
+    can[i][i] = 1000000000000000
+    for j in range(i+1, n):
+        dist = (x[i]-x[j])*(x[i]-x[j]) + (y[i]-y[j])*(y[i]-y[j])
+        can[i][j] = dist
+        can[j][i] = dist
+#print(can)
+while lo <= hi:
+    mid = lo + (hi-lo)//2
+    depth = 0
+    visited = [False for i in range(n)]  
+    dfs(0, mid)
+    #print(depth)
+    if depth == n:
+        hi = mid-1
+        ans = min(ans, mid)
+    else:
+        lo = mid+1
+with open('moocast.out', 'w') as f:
+    f.write(str(ans) + '\n')
+

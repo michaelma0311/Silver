@@ -1,0 +1,35 @@
+'''
+ID: michael504
+LANG: PYTHON3
+TASK: runround
+'''
+
+fin = open('runround.in', 'r')
+
+
+def solve(cur):
+    if len(set(str(cur))) != len(str(cur)) or str(cur).count('0') != 0:
+        return False
+    v = []
+    p = 0
+    x = str(cur)
+    for i in range(len(x)):
+        
+        p = (p+(int(x[p])%len(x)))%len(x)
+        v += [p]
+        #print(p, x[p], x)
+    v = set(v)
+    #print(v)
+    if len(v) == len(x):
+        return True
+    return False
+
+
+n = int(fin.readline()) + 1
+while (True):
+    if (solve(n) != True):
+        n += 1
+    else:
+        break
+with open('runround.out', 'w') as f:
+    f.write(str(n) + '\n')

@@ -1,0 +1,48 @@
+import sys
+sys.setrecursionlimit(1000000000)
+def floodfill(x, y):
+    global tempa
+    global tempp
+    if x < 0 or x > n-1 or y < 0 or y > n-1:
+        tempp += 1
+        return
+    
+    if visited[x][y] == True:
+        return
+    if grid[x][y] == '.':
+        tempp += 1
+        return
+    visited[x][y] = True
+    if grid[x][y] == '#':
+        tempa += 1
+    floodfill(x+1, y)
+    floodfill(x-1, y)
+    floodfill(x, y+1)
+    floodfill(x, y-1)
+tempa = 0
+tempp = 0
+ansa = 0
+ansp = 0
+
+fin = open('perimeter.in')
+n = int(fin.readline())
+grid = []
+visited = [[False for i in range(n)] for j in range(n)]
+for i in range(n):
+    grid.append(list(map(str, fin.readline().strip())))
+for i in range(n):
+    for j in range(n):
+        if visited[i][j] == False and grid[i][j] == '#':
+            floodfill(i, j)
+            #print(tempa, tempp)
+            if ansa == tempa:
+                ansp = min(ansp, tempp)
+            if tempa > ansa:
+                ansa = tempa
+                ansp = tempp
+            tempa = 0
+            tempp = 0
+
+
+with open('perimeter.out', 'w') as f:
+    f.write(str(ansa) + ' ' + str(ansp) + '\n')

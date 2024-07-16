@@ -1,0 +1,12 @@
+def main():
+    n = int(input())
+    p = [0]
+    ma = 0
+    for i in range(n):
+        p.append((p[-1] + int(input()))%7)
+    for i in range(7):
+        if i not in p:
+            continue
+        ma = max(ma, n-p[::-1].index(i)-p.index(i))
+    print(ma)
+main()

@@ -1,0 +1,32 @@
+def main():
+    fin = open('lifeguards.in')
+    n = int(fin.readline())
+    time = []
+    for i in range(n):
+        time.append(list(map(int, fin.readline().split())))
+    time = sorted(time)
+    right, tot, left = 0, 0, 0
+    lis = [0 for i in range(time[-1][1]+1)]
+    for i in range(n):
+        cur = time[i]
+        tot += cur[1]-cur[0]
+
+        if cur[0] < right:
+            if cur[0] > left and right > cur[1]:
+                tot -= cur[1]-cur[0]
+            else:
+                tot -= right-cur[0]
+        left = cur[0]
+        right = cur[1]
+    temp = tot
+    ans, left, right, subtract = 0, 0, 0, float('inf')
+    for i in range(n-1):
+        start, end = time[i][0], time[i][1]
+        sub = min(time[i+1][0], end) -  max(start, right)
+        subtract = min(subtract, sub)
+        right = max(right, end)
+    subtract = max(subtract, 0)
+    ans = tot-subtract
+    with open('lifeguards.out', 'w') as f:
+        f.write(str(ans) + '\n')
+main()

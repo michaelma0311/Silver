@@ -1,0 +1,56 @@
+'''
+ID: michael504
+LANG: PYTHON3
+TASK: prefix
+'''
+fin = open('prefix.in', 'r')
+prims = []
+x = list(map(str, fin.readline().split()))
+while (x != ['.']):
+    prims += x
+    x = list(map(str, fin.readline().split()))
+lis = ''
+x = fin.readline()
+while (x != ''):
+    lis += x
+    x = fin.readline().rstrip().lstrip()
+    #print(x.rstrip(), len(x), lis)
+    lis = lis.rstrip()
+dp = [False for i in range(len(lis)+1)]
+dp[0] = True
+#print(prims)
+#print(len(lis))
+for i in range(1, len(lis)+1):
+    for j in reversed(range(0, i)):
+        #print(lis[j:i], j, i)
+        if (dp[j] == True and lis[j:i] in prims):
+            dp[i] = True
+            break
+        #else:
+            #if (len(lis[j:i]) == 2):
+
+                #print(lis[j:i], lis[j:i] in prims, j, dp[j])
+ans = 0
+for i in reversed(range(0, len(dp))):
+    if dp[i] == True:
+        ans = i
+        break
+#print(dp)
+with open('prefix.out', 'w') as f:
+    f.write(str(ans) + '\n')
+'''
+AH AS AZ BW CD CK CN CU CZ DB DH EC ED EN FJ GA GK GM GS GT 
+HA HN HZ IN IR JB JD JM JZ KG KI LO LQ LU LW LY MJ MT MV ND 
+NM NS OB OI OK OM PG PO PQ PZ QE QP RG RK RN RP RQ RR RS RU 
+SA SF SJ SN TK TR TU TY UA UO US UW UX VH VL VO WF WH WL WS 
+WZ XU XW XY YA YI YN YT ZF ZH ZJ ZL ZR ZX 
+. 
+ASCDCKCUEDFJGKGMHAIRJMKILQLWLYMJMTMVNSOIOKOMPOPQQPRGRNRPSJTU 
+TYWSWZXWYIYTAHAZBWCDCNCUDHECENGAGMGSGTHAHNKGLQLULWNMOBOIOKOM 
+PGPOPQPZRGRKRNRPRRSATRTUUWVLVOWFWLWSXUXYYAYIYNYTZFZJZRZXBWCK 
+CUFJGAGSHAHNIRJBJMKILQLUNDNMNSOKOMPQQERGRQRRRSSASFSJSNTUTYUA 
+UOUWVLWHXUXWXYYAYTZFZJZLZRZXASBWCDCNDBECEDFJGSHAHNHZINJMKGKI 
+LQMJNMNSOKOMPQQPRRRSSFSJSNTRTUTYUAUWUXVLVOWLWSWZXYYNYTZFZHZR 
+ZXAHASAZCDCKCNDBECENGMGSHAHZIRJDKGKILOLYOBOKPGPQQPRRSNTRTYUO 
+USUXVHVLVOWFWLWSXYYNZJZXZZAHAZBWCDCKCNDB 
+'''

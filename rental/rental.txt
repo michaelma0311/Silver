@@ -1,0 +1,47 @@
+def main():
+    fin = open('rental.in')
+    n, m, r = map(int, fin.readline().split())
+    cows = []
+    for i in range(n):
+        cows.append(int(fin.readline()))
+    sell = []
+    for i in range(m):
+        sell.append(list(map(int, fin.readline().split())))
+    rent = []
+    for i in range(r):
+        rent.append(int(fin.readline()))
+    allrent = [0 for i in range(n)]
+    cows = sorted(cows)
+    rent = sorted(rent, reverse = True)
+    #print(rent)
+    for i in range(min(n, r)):
+        allrent[i] += rent[i]
+    allsell = [0 for i in range(n)]
+    cows = sorted(cows, reverse = True)
+    sell = sorted(sell, key = lambda x: x[1], reverse = True)
+    for i in range(n):
+        if len(sell) == 0:
+            break
+        cur = cows[i]
+        curmon = 0
+        non = False
+        while cur != 0:
+            g = min(cur, sell[0][0])
+            cur -= g
+            sell[0][0] -= g
+            curmon += g*sell[0][1]
+            #print(curmon)
+            if sell[0][0] == 0:
+                sell.pop(0)
+            if len(sell) == 0:
+                break
+        allsell[i] = curmon
+    allsell = allsell[::-1]
+    ans = 0
+    for i in range(n):
+        ans += max(allsell[i], allrent[i])
+    with open('rental.out', 'w') as f:
+        f.write(str(ans) + '\n')
+
+
+main()

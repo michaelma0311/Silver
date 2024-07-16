@@ -1,0 +1,62 @@
+s = input()
+t = input()
+amt = 18
+chr_t = {}
+chr_s = {}
+for i in range(97, 115):
+	chr_t[chr(i)] = 0
+	chr_s[chr(i)] = 0
+fail = [False for i in range(amt)]
+pfail = [[False for i in range(amt)] for j in range(amt)]
+for i in s:
+	chr_s[i] += 1
+for i in t:
+	chr_t[i] += 1
+for i in range(amt):
+	if chr_s[chr(i+97)] != chr_t[chr(i+97)]:
+			fail[i] = True
+for x in range(amt):
+	for y in range(x+1, amt):
+		i = chr(x+97)
+		j = chr(y+97)
+		works = True
+		p1, p2 = 0, 0
+		while True:
+			while len(s) > p1 and s[p1] != i and s[p1] != j:
+				p1 += 1
+			while len(t) > p2 and t[p2] != i and t[p2] != j:
+				p2 += 1
+			if p1 >= len(s) and p2 >= len(t):
+				break
+			if p1 >= len(s):
+				works = False
+				break
+			elif p2 >= len(t):
+				works = False
+				break
+			if s[p1] != t[p2]:
+				works = False
+				break
+			p1 += 1
+			p2 += 1
+		if works == False:
+			pfail[x][y] = True
+#print(fail)
+for _ in range(int(input())):
+	q = input()
+	works = True
+	for i in range(len(q)):
+		if fail[ord(q[i])-97] == True:
+			works = False
+			break
+	for i in range(len(q)):
+		for j in range(i+1, len(q)):
+			#print(q[i], q[j], pfail)
+			if pfail[ord(q[i])-97][ord(q[j])-97]:
+				works = False
+				break
+	if works == True:
+		print('Y', end='')
+	else:
+		print('N', end='')
+	

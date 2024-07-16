@@ -1,0 +1,15 @@
+fin = open('mountains.in')
+n = int(fin.readline())
+mountains = []
+for i in range(n):
+    mountains.append(list(map(int, fin.readline().split())))
+mountains = sorted(mountains, key = lambda x: x[1])
+ans = n
+for i in range(n):
+    for j in range(n-1, i+1, -1):
+        x1, y1, x2, y2 = mountains[i][0], mountains[i][1], mountains[j][0], mountains[j][1]
+        if abs(y2-y1) >= abs(x2-x1):
+            ans -= 1
+            break
+with open('mountains.out', 'w') as f:
+    f.write(str(ans) + '\n')

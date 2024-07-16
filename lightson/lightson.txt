@@ -1,0 +1,49 @@
+import sys
+sys.setrecursionlimit(100000)
+
+fin = open('lightson.in')
+n, m = map(int, fin.readline().split())
+ans = 1
+visit = [[False for i in range(n)] for j in range(n)]
+illu = [[False for i in range(n)] for j in range(n)]
+switch = [[[] for i in range(n)] for j in range(n)]
+xc = [-1, 0, 1, 0]
+yc = [0, -1, 0, 1]
+for i in range(m):
+    x, y, a, b = map(int, fin.readline().split())
+    switch[x-1][y-1] += [(a-1, b-1)]
+def check(r, c):
+    for i in range(4):
+        tempr = r + xc[i]
+        tempc = c + yc[i]
+        if tempr < 0 or tempc < 0 or tempr > n-1 or tempc > n-1:
+            continue
+        if visit[tempr][tempc] == True:
+            return True
+    return False    
+def dfs(r, c):
+    global ans
+    if r < 0 or c < 0 or r > n-1 or c > n-1 or visit[r][c] == True or illu[r][c] == False:
+        return
+    if check(r, c) == False and not (r == 0 and c == 0):
+        return
+    visit[r][c] = True
+    for i in range(4):
+        dfs(r+xc[i], c + yc[i])
+    for i in range(len(switch[r][c])):
+        p1, p2 = switch[r][c][i][0], switch[r][c][i][1]
+        #print(p1, p2)
+        if illu[p1][p2] == False:
+            ans += 1
+        
+        illu[p1][p2] = True
+        
+        dfs(p1, p2) 
+illu[0][0] = True
+
+dfs(0, 0)
+
+with open('lightson.out', 'w') as f:
+    f.write(str(ans) + '\n')
+        
+

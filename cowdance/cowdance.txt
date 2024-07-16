@@ -1,0 +1,37 @@
+from heapq import *
+def simulate(k, cows, singers):
+
+	global tmax, n
+	#print(k, singers)
+	heapify(singers)
+	#print(singers)
+	for idxval in range(k, n):
+		minval = heappop(singers)
+		heappush(singers, minval+cows[idxval])
+		if minval+cows[idxval] > tmax:
+			return False
+	return True
+fin = open('cowdance.in')
+n, tmax = map(int, fin.readline().split())
+cows = []
+for i in range(n):
+    cows.append(int(fin.readline()))
+ans = float('inf')
+left = 1
+right = n
+while left < right:
+    k = (left+right)//2
+    
+    cur = cows[:k]
+    #print(k, cur)
+    can = True
+    if simulate(k, cows, cur) == True:
+        right = k
+    else:
+        left = k+1
+with open('cowdance.out', 'w') as f:
+
+    if simulate(left, cows, cows[:left]) == True:
+        f.write(str(left)+'\n')
+    else:
+        f.write(str(right) + '\n')

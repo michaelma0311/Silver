@@ -1,0 +1,63 @@
+
+MAXN = 100010
+
+# buddy_of[MAXN] which cow each ponts to
+buddy_of = [0 for i in range(MAXN)]
+value = [0 for i in range(MAXN)]
+# value[MAXN] how many times each cow moos
+#in_degree[MAXN] keep track of in-degree as we process nodes
+in_degree = [0 for i in range(MAXN)]
+done = [False for i in range(MAXN)]
+# take in the input
+n = int(input())
+for i in range(n):
+    a, b = map(int, input().split())
+    buddy_of[i] = a-1
+    value[i] = b
+for i in range(n):
+    in_degree[buddy_of[i]] += 1
+
+
+
+#initialize degrees
+# pointed to by i (1->budd_of[i])
+
+
+
+
+
+# STEP 1: use a queue to remove all degree 0 nodes
+q = []
+#initialize the queue with all current degree 0 nodes
+for i in range(n):
+    if in_degree[i] == 0:
+        q += [i]
+#keep track of total value
+ans = 0
+
+# take off nodes untill no more are left
+# while (!q.empty()){
+while len(q) != 0:
+    x = q.pop(0)
+    done[x] = True
+    ans += value[x]
+    in_degree[buddy_of[x]] -= 1
+    if in_degree[buddy_of[x]] == 0:
+        q += [buddy_of[x]]
+
+for i in range(n):
+    if done[i] == False:
+        start = i
+        cur = i
+        sumc = 0
+        small = value[start]
+        count = 0
+        while count < 1 or cur != start:
+            sumc += value[cur]
+            small = min(small, value[cur])
+            done[cur] = True
+            cur = buddy_of[cur]
+            count += 1
+        ans += sumc
+        ans -= small
+print(ans)

@@ -1,0 +1,32 @@
+n = int(input())
+mn = n+1
+a = [[1000000000, 1000000000000] for i in range(mn)]
+presum = [[0 for i in range(mn+1)] for j in range(mn)]
+for i in range(n):
+    a[i] = list(map(int, input().split()))
+a = sorted(a, key = lambda x: x[0])
+for i in range(n):
+    a[i][0] = i+1
+a = sorted(a, key = lambda x: x[1])
+for i in range(n):
+    a[i][1] = i+1
+for i in range(n):
+    cur = a[i]
+    presum[cur[0]][cur[1]] = 1
+for i in range(1, n+1):
+    for j in range(1, n+1):
+        presum[i][j] += presum[i-1][j] + presum[i][j-1] - presum[i-1][j-1]
+ans = 0
+a = sorted(a, key = lambda x: x[1])
+def lower(x1, y1, x2, y2):
+    return presum[n][y2] - presum[n][y1-1] - presum[x2-1][y2] + presum[x2-1][y1-1]
+def upper(x1, y1, x2, y2):
+    return presum[x1][y2] - presum[x1][y1-1] - presum[0][y2] + presum[0][y1-1]
+for i in range(n):
+    for j in range(i+1, n):
+        small = min(a[i][0], a[j][0])
+        big = max(a[i][0], a[j][0])
+        up = upper(small, i+1, big, j+1)
+        low = lower(small, i+1, big, j+1)
+        ans += up*low
+print(ans+n+1)

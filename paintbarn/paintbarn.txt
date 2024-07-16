@@ -1,0 +1,24 @@
+width = 1000
+
+barn = [[0 for _ in range(width + 1)] for _ in range(width + 1)]
+fin = open('paintbarn.in')
+n, k = map(int, fin.readline().split())
+for _ in range(n):
+    x1, y1, x2, y2 = map(int, fin.readline().split())
+    barn[x1][y1] += 1
+    barn[x2][y2] += 1
+    barn[x2][y1] -= 1
+    barn[x1][y2] -= 1
+ans = 0
+for x in range(width+1):
+    for y in range(width+1):
+        if x != 0:
+            barn[x][y] += barn[x-1][y]
+        if y != 0:
+            barn[x][y] += barn[x][y-1]
+        if x != 0 and y != 0:
+            barn[x][y] -= barn[x-1][y-1]
+        if barn[x][y] == k:
+            ans += 1
+with open('paintbarn.out', 'w') as f:
+    f.write(str(ans) + '\n')

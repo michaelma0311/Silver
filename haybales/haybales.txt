@@ -1,0 +1,19 @@
+    fin = open('haybales.in')
+    def bisect(x):
+        hi = n
+        lo = 0
+        while lo < hi:
+            mid = (lo+hi)//2
+            if cows[mid] <= x:
+                lo = mid+1
+            else:
+                hi = mid
+        return lo
+    n, q = map(int, fin.readline().split())
+    cows = list(map(int, fin.readline().split()))
+    cows = sorted(cows)
+    with open('haybales.out', 'w') as f:
+        for i in range(q):
+            a, b = map(int, fin.readline().split())
+            f.write(str(bisect(b) - bisect(a-1)) + '\n')
+            
